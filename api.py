@@ -59,6 +59,7 @@ def orderFolder(path):
                     movie_list.append(subFolder)
     return movie_list
 
+
 def write_to_movie_list(movie_list):
     with open('./movie_list.txt','r+') as file:
         file.write('\n'.join(movie_list))
