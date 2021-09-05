@@ -15,6 +15,7 @@ def get_movie_info(moive_folder:str):
             movie_year= moive_folder.split('(')[1].split(')')[0]
             return movie_name, movie_year
 
+
 def get_movie_id(movie_name,movie_year):
     
     url = f'https://imdb-api.com/en/API/SearchMovie/{API_KEY}/{movie_name}'
@@ -41,23 +42,24 @@ def get_movie_gener(movie_id):
     return genre    
 
 
-def orderFolder(path):
-    listdir = os.listdir(path)
+def order_by_alphabet(path):
+    ganer_folder_list = os.listdir(path)
     movie_list = []
-    for folder in listdir:
-        folderPath=os.path.join(path,folder)
-        listSubDir=os.listdir(folderPath)
-        for subFolder in listSubDir:
-            subfolderPath=os.path.join(folderPath,subFolder)
-            if(len(subFolder)>1):
-                folderToMove=os.path.join(folderPath,subFolder[0])
-                shutil.move(subfolderPath, folderToMove)
+    for ganer_folder in ganer_folder_list:
+        ganer_folder_path=os.path.join(path,ganer_folder)
+        letter_folder_list=os.listdir(ganer_folder_path)
+        for letter_folder in letter_folder_list:
+            letter_folder_path=os.path.join(ganer_folder_path,letter_folder)
+            if(len(letter_folder)>1):
+                folderToMove=os.path.join(ganer_folder_path,letter_folder[0])
+                shutil.move(letter_folder_path, folderToMove)
             else:
-                new_folder_Path=os.path.join(folderPath,subFolder)
-                listSubDir=os.listdir(new_folder_Path)
-                for subFolder in listSubDir:
-                    movie_list.append(subFolder)
+                new_folder_Path=os.path.join(ganer_folder_path,letter_folder)
+                letter_folder_list=os.listdir(new_folder_Path)
+                for letter_folder in letter_folder_list:
+                    movie_list.append(letter_folder)
     return movie_list
+
 
 
 def write_to_movie_list(movie_list):
@@ -65,7 +67,7 @@ def write_to_movie_list(movie_list):
         file.write('\n'.join(movie_list))
     
     return
-        
+
 
 def main():
     Unarranged_Movie_Folder_list = os.listdir(unarranged_movie_path)
@@ -81,7 +83,7 @@ def main():
 
             movie_path = os.path.join(unarranged_movie_path,movie_folder_name)
             shutil.move(movie_path, gener_path) 
-    movie_list = orderFolder(arranged_movie_path)
+    movie_list = order_by_alphabet(arranged_movie_path)
     write_to_movie_list(movie_list)
 
 if __name__ == '__main__':
